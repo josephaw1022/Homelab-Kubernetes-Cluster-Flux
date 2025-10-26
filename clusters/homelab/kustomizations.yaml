@@ -85,29 +85,152 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: core-operators
+  name: core-arc
   namespace: flux-system
 spec:
   interval: 10m
   dependsOn:
     - name: cert-manager
-  path: ./infra
+  path: ./infra/actions-runner-controller
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  resources:
-    - actions-runner-controller
-    - cnpg
-    - ingress-nginx
-    - metallb
-    - metrics-server
-    - opentelemetry-operator
-    - redis-operator
-    - reloader
-    - strimzi
-    - tailscale-operator
-
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-cnpg
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/cnpg
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/ingress-nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-metallb
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/metallb
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-metrics-server
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/metrics-server
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-opentelemetry-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/opentelemetry-operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-redis-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/redis-operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-reloader
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/reloader
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-strimzi
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/strimzi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-tailscale-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/tailscale-operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -124,4 +247,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-
