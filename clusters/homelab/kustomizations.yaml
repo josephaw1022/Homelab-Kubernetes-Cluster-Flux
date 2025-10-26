@@ -277,6 +277,10 @@ spec:
   wait: true
   dependsOn:
     - name: cert-manager
+  
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
 
 
 
@@ -294,6 +298,10 @@ spec:
   wait: true
   dependsOn:
     - name: kyverno-operator
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -309,7 +317,9 @@ spec:
   dependsOn:
     - name: kyverno-operator
     - name: core-ingress-nginx
-
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -324,6 +334,9 @@ spec:
   wait: true
   dependsOn:
     - name: kyverno-operator
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -339,3 +352,6 @@ spec:
   dependsOn:
     - name: kyverno-operator
     - name: kyverno-policies-global
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
