@@ -31,25 +31,33 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-secrets
+  name: external-secrets-creds
   namespace: flux-system
 spec:
   interval: 10m
   dependsOn:
     - name: external-secrets-operator
-    - name: external-secrets-vars
-  path: ./infra/external-secrets/resources
+  path: ./infra/external-secrets/creds
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: homelab-issuer-vars
-      - kind: Secret
-        name: azuredns-config
 
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets-store
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: external-secrets-creds
+  path: ./infra/external-secrets/store
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -60,12 +68,18 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: external-secrets
+    - name: external-secrets-store
   path: ./infra/cert-manager
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: homelab-issuer-vars
+      - kind: Secret
+        name: azuredns-config
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -101,3 +115,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+
