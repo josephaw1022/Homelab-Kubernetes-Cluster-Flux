@@ -96,9 +96,18 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  postBuild:
-    substitute:
-      SKIP_DIRS: "cert-manager,external-secrets,helm-repositories"
+  resources:
+    - actions-runner-controller
+    - cnpg
+    - ingress-nginx
+    - metallb
+    - metrics-server
+    - opentelemetry-operator
+    - redis-operator
+    - reloader
+    - strimzi
+    - tailscale-operator
+
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
