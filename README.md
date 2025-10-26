@@ -31,11 +31,10 @@ ARC (PAT): github-token
 
 ```bash
 flux bootstrap github \
-  --owner <github-user-or-org> \
-  --repository homelab-gitops \
+  --owner josephaw1022 \
+  --repository Homelab-Kubernetes-Cluster-Flux \
   --branch main \
-  --path clusters/homelab \
-  --personal
+  --path clusters/homelab
 ```
 
 Flux will:
