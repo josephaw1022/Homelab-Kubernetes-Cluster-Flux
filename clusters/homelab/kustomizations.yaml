@@ -275,6 +275,8 @@ spec:
   interval: 10m
   prune: true
   wait: true
+  dependsOn:
+    - name: cert-manager
 
 
 
@@ -290,6 +292,8 @@ spec:
   interval: 10m
   prune: true
   wait: true
+  dependsOn:
+    - name: kyverno-operator
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -304,7 +308,7 @@ spec:
   wait: true
   dependsOn:
     - name: kyverno-operator
-    - name: ingress-nginx
+    - name: core-ingress-nginx
 
 
 ---
