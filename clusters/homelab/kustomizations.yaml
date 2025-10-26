@@ -16,13 +16,13 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cert-manager
+  name: external-secrets
   namespace: flux-system
 spec:
   interval: 10m
   dependsOn:
     - name: infra-helm-repositories
-  path: ./infra/cert-manager
+  path: ./infra/external-secrets
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,14 +32,14 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-secrets
+  name: cert-manager
   namespace: flux-system
 spec:
   interval: 10m
   dependsOn:
     - name: infra-helm-repositories
-    - name: cert-manager
-  path: ./infra/external-secrets
+    - name: external-secrets
+  path: ./infra/cert-manager
   prune: true
   sourceRef:
     kind: GitRepository
@@ -63,7 +63,6 @@ spec:
     name: flux-system
   postBuild:
     substitute:
-      # avoid looping on external-secrets YAMLs
       SKIP_DIRS: "cert-manager,external-secrets,helm-repositories"
 
 ---
