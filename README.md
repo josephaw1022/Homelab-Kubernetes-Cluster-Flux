@@ -44,6 +44,36 @@ Instead, I use **Azure Key Vault** as the source of truth, and **External Secret
 This approach provides all the benefits of GitOps **without** the complexity of tools like Sealed Secrets.  
 Secrets can be updated in Key Vault, and ESO will sync the updates automatically into the cluster — no re-commit or redeploy required.
 
+
+**Self-Service Secret Updates via GitHub Actions**
+
+There is also a github action workflow that can create or update secrets in the Azure Key Vault directly from GitHub Actions, using OIDC to authenticate to a User Assigned Managed Identity (UAMI) that has access to the Key Vault. This allows for automated management of secrets in the Key Vault without needing to store sensitive credentials in GitHub. This streamlines the process of managing secrets in the Key Vault and makes it easier to make a change to a secret in the Key Vault without needing to do it manually via the Azure Portal or Azure CLI.
+
+
+<p align="center">
+  <img src="assets/create-keyvault-secret-via-actions.png" width="700" alt="Create Key Vault secret via GitHub Actions workflow"/>
+</p>
+
+
+This workflow is triggered manually via the "Run workflow" button in the Actions tab of the GitHub repository. You provide the secret name and value as inputs, and the workflow handles creating or updating the secret in Azure Key Vault.
+
+This is all done securely using OIDC and a UAMI, so no sensitive credentials are stored in GitHub. In order to do this you would need to
+
+-  create a managed identity in Azure and assign it access to the Key Vault (e.g. Key Vault Secrets User role)
+
+<p align="center">
+  <img src="assets/gh-action-managed-identity-role-assignments.png" width="700" alt="Managed Identity Key Vault access assignment"/>
+</p>
+
+- configure the GitHub repository to trust the managed identity via OIDC
+
+<p align="center">
+  <img src="assets/keyvault-gh-action-federated-identity.png" width="700" alt="Key Vault GitHub Actions federated identity setup"/>
+</p>
+
+
+
+
 **Why not Sealed Secrets?**  
 They're cumbersome for secret rotation, noisy in Git history, and harder to automate.  
 ESO + Key Vault is simpler, scalable, and cloud-native.
