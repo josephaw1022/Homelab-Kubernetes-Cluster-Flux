@@ -19,4 +19,4 @@ spec:
             environment: ${AZURE_ENVIRONMENT}
             clientSecretSecretRef:
               name: azuredns-config
-              key: client-secret
+              key: client_secret
