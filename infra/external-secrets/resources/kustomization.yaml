@@ -1,0 +1,9 @@
+# infra/external-secrets/resources/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./clustersecretstore-azure-kv.yaml
+  - ./externalsecret-arc-controller-manager.yaml
+  - ./externalsecret-azuredns-config.yaml
+  - ./externalsecret-homelab-issuer-vars.yaml
+  - ./externalsecret-tailscale-operator-oauth.yaml
