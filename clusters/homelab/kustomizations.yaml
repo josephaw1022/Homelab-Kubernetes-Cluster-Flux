@@ -96,6 +96,25 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-kube-prometheus-stack
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/kube-prometheus-stack
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+
+
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
