@@ -37,11 +37,19 @@ spec:
   interval: 10m
   dependsOn:
     - name: external-secrets-operator
+    - name: external-secrets-vars
   path: ./infra/external-secrets/resources
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: homelab-issuer-vars
+      - kind: Secret
+        name: azuredns-config
+
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
