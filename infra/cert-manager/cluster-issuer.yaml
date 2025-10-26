@@ -20,3 +20,32 @@ spec:
             clientSecretSecretRef:
               name: azuredns-config
               key: client_secret
+
+
+
+
+---
+
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: homelab-issuer-staging
+spec:
+  acme:
+    email: ${ACME_EMAIL}
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: homelab-issuer-key
+    solvers:
+      - dns01:
+          azureDNS:
+            hostedZoneName: ${AZURE_DNS_ZONE}
+            subscriptionID: ${AZURE_SUBSCRIPTION_ID}
+            resourceGroupName: ${AZURE_DNS_RG}
+            tenantID: ${AZURE_TENANT_ID}
+            clientID: ${AZURE_CLIENT_ID}
+            environment: ${AZURE_ENVIRONMENT}
+            clientSecretSecretRef:
+              name: azuredns-config
+              key: client_secret
