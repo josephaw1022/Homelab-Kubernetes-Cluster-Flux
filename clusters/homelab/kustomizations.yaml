@@ -150,7 +150,7 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: cert-manager
+    - name: core-metallb
   path: ./infra/metallb/resources
   prune: true
   sourceRef:
