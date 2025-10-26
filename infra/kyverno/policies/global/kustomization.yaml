@@ -1,0 +1,12 @@
+
+
+resources:
+  - automatically-add-pss-labels.yaml
+  - disallow-tld-for-ns.yaml
+  - disallow-latest-tag.yaml
+  - disallow-use-of-default-ns.yaml
+  - require-nonroot.yaml
+
+
+
+
