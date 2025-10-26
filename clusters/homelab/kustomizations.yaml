@@ -1,0 +1,214 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infra-helm-repositories
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/helm-repositories
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: infra-helm-repositories
+  path: ./infra/external-secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: external-secrets
+  path: ./infra/cert-manager
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager
+      namespace: cert-manager
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager-cainjector
+      namespace: cert-manager
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: cert-manager-webhook
+      namespace: cert-manager
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager-cluster-issuer
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: cert-manager
+  path: ./infra/cert-manager
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: homelab-issuer-vars
+        namespace: flux-system
+  healthChecks:
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      name: homelab-issuer
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: infra-helm-repositories
+  path: ./infra/metallb
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: metallb-controller
+      namespace: metallb-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb-ip-l2
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: metallb
+  path: ./infra/metallb
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: metallb-ip-l2
+  path: ./infra/ingress-nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: homelab-issuer-vars
+        namespace: flux-system
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: ingress-nginx-controller
+      namespace: ingress-nginx
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-operators
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: infra-helm-repositories
+  path: ./infra
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tailscale-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: infra-helm-repositories
+    - name: external-secrets
+  path: ./infra/tailscale-operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: actions-runner-controller
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: infra-helm-repositories
+    - name: external-secrets
+  path: ./infra/actions-runner-controller
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: actions-runner-controller
+      namespace: actions-runner-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-fallback
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: ingress-nginx
+    - name: cert-manager-cluster-issuer
+  path: ./apps/fallbacksite
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: homelab-issuer-vars
+        namespace: flux-system

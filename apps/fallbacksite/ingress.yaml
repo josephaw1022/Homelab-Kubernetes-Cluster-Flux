@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fallback
+  namespace: fallbacksite
+  annotations:
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - ${ROOT_DOMAIN}
+        - ${WILDCARD_DOMAIN}
+      secretName: ${TLS_SECRET_NAME}
+  rules:
+    - host: ${ROOT_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fallback-nginx
+                port:
+                  number: 80
+    - host: ${WILDCARD_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fallback-nginx
+                port:
+                  number: 80
