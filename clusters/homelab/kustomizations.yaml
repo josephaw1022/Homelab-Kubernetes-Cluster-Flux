@@ -120,7 +120,7 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: cert-manager
+    - name: core-metallb-resources
   path: ./infra/ingress-nginx
   prune: true
   sourceRef:
