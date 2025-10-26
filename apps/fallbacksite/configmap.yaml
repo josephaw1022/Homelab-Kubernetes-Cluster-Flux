@@ -23,7 +23,7 @@ data:
             If you’re seeing this, the hostname you tried isn’t mapped to an active Ingress.
           </p>
           <div class="mt-6">
-            <a href="https://${ROOT_DOMAIN}" class="px-5 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
+            <a href="https://kubesoar.com" class="px-5 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
               Return to Home
             </a>
           </div>
