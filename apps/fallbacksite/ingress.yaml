@@ -9,11 +9,11 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - ${ROOT_DOMAIN}
-        - ${WILDCARD_DOMAIN}
+        - "${ROOT_DOMAIN}"
+        - "${WILDCARD_DOMAIN}"
       secretName: ${TLS_SECRET_NAME}
   rules:
-    - host: ${ROOT_DOMAIN}
+    - host: "${ROOT_DOMAIN}"
       http:
         paths:
           - path: /
@@ -23,7 +23,7 @@ spec:
                 name: fallback-nginx
                 port:
                   number: 80
-    - host: ${WILDCARD_DOMAIN}
+    - host: "${WILDCARD_DOMAIN}"
       http:
         paths:
           - path: /
