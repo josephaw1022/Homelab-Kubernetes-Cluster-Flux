@@ -262,3 +262,76 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kyverno-operator
+  namespace: flux-system
+spec:
+  path: ./infra/kyverno/operator
+  interval: 10m
+  prune: true
+  wait: true
+
+
+
+---
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kyverno-pss
+  namespace: flux-system
+spec:
+  path: ./infra/kyverno/pss
+  interval: 10m
+  prune: true
+  wait: true
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: policy-reporter
+  namespace: flux-system
+spec:
+  path: ./infra/policy-reporter
+  interval: 10m
+  prune: true
+  wait: true
+  dependsOn:
+    - name: kyverno-operator
+    - name: ingress-nginx
+
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kyverno-policies-global
+  namespace: flux-system
+spec:
+  path: ./infra/kyverno/policies/global
+  interval: 10m
+  prune: true
+  wait: true
+  dependsOn:
+    - name: kyverno-operator
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kyverno-policies-homelab
+  namespace: flux-system
+spec:
+  path: ./clusters/homelab/policies/kyverno
+  interval: 10m
+  prune: true
+  wait: true
+  dependsOn:
+    - name: kyverno-operator
+    - name: kyverno-policies-global

@@ -1,0 +1,20 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-nodeport
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+    - name: disallow-nodeport
+      match:
+        any:
+          - resources:
+              kinds:
+                - Service
+      validate:
+        message: NodePort services are not allowed in homelab
+        pattern:
+          spec:
+            type: "!NodePort"

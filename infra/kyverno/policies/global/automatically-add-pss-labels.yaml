@@ -1,0 +1,42 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: label-pss-on-new-ns
+  annotations:
+    policies.kyverno.io/title: Add Pod Security Standards Labels
+    policies.kyverno.io/category: Security
+    policies.kyverno.io/severity: medium
+    kyverno.io/kyverno-version: 1.6.2
+    policies.kyverno.io/minversion: 1.6.0
+    policies.kyverno.io/subject: Namespace
+    policies.kyverno.io/description: >-
+      Automatically applies Pod Security Standards labels to new namespaces to enforce baseline security policies. This includes enforce, audit, and warn labels with appropriate versions for pod security admission controls.
+spec:
+  validationFailureAction: Audit
+  background: false
+  rules:
+    - name: label-pss
+      match:
+        any:
+          - resources:
+              kinds: ["Namespace"]
+      exclude:
+        any:
+          - resources:
+              names: ["kube-system","kyverno","olm","cert-manager","operators","ingress-nginx","kyverno-policy-reporter","external-secrets","reloader","kyverno-config"]
+      preconditions:
+        all:
+          - key: "{{ request.operation }}"
+            operator: Equals
+            value: CREATE
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            labels:
+              pod-security.kubernetes.io/enforce: baseline
+              pod-security.kubernetes.io/enforce-version: v1.33
+              pod-security.kubernetes.io/audit: restricted
+              pod-security.kubernetes.io/audit-version: v1.33
+              pod-security.kubernetes.io/warn: restricted
+              pod-security.kubernetes.io/warn-version: v1.33

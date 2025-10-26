@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: policy-reporter
+  namespace: policy-reporter
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: policy-reporter
+      sourceRef:
+        kind: HelmRepository
+        name: policy-reporter
+        namespace: flux-system
+      version: "*"
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    ui:
+      enabled: true
+      plugins:
+        kyverno: true
+      service:
+        type: ClusterIP
+      ingress:
+        enabled: true
+        className: nginx
+        annotations:
+          cert-manager.io/cluster-issuer: homelab-issuer
+        hosts:
+          - host: policy.kubesoar.com
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - policy.kubesoar.com
+            secretName: policy-kubesoar-com-tls
