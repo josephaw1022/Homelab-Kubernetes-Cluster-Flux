@@ -24,6 +24,8 @@ spec:
     controller:
       ingressClassResource:
         default: true
-      service:
-        type: LoadBalancer
-        loadBalancerIP: ${INGRESS_LB_IP}
+  valuesFrom:
+    - kind: Secret
+      name: ingress-nginx-network
+      valuesKey: ingress-lb-ip
+      targetPath: controller.service.loadBalancerIP
