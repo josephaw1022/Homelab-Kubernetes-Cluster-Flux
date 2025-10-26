@@ -256,7 +256,7 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: core-operators
+    - name: core-ingress-nginx
   path: ./apps/fallbacksite
   prune: true
   sourceRef:
