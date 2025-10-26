@@ -5,7 +5,7 @@ metadata:
   name: add-reloader-annotation
 spec:
   validationFailureAction: enforce
-  background: true
+  background: false
   rules:
     - name: add-reloader-annotation-to-deployments
       match:
