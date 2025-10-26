@@ -11,9 +11,8 @@ All secrets come from **Azure Key Vault** via ESO — nothing sensitive is commi
 kubectl create namespace external-secrets
 
 kubectl -n external-secrets create secret generic akv-eso-creds \
-  --from-literal=tenantId='<TENANT_ID>' \
-  --from-literal=clientId='<ESO_SP_APP_ID>' \
-  --from-literal=clientSecret='<ESO_SP_SECRET>'
+  --from-literal=ClientID='<ESO_SP_APP_ID>' \
+  --from-literal=ClientSecret='<ESO_SP_SECRET>'
 ```
 
 1. Create Key Vault & populate secrets
