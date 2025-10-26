@@ -1,0 +1,20 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-reloader-annotation
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+    - name: add-reloader-annotation-to-deployments
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              reloader.stakater.com/auto: "true"
