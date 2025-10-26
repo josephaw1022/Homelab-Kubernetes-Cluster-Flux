@@ -11,7 +11,7 @@ spec:
     - hosts:
         - "${ROOT_DOMAIN}"
         - "${WILDCARD_DOMAIN}"
-      secretName: ${TLS_SECRET_NAME}
+      secretName: "${TLS_SECRET_NAME}"
   rules:
     - host: "${ROOT_DOMAIN}"
       http:
