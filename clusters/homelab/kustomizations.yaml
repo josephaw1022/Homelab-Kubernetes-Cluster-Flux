@@ -1,4 +1,3 @@
-# clusters/homelab/kustomizations.yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -16,13 +15,29 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-secrets
+  name: external-secrets-operator
   namespace: flux-system
 spec:
   interval: 10m
   dependsOn:
     - name: infra-helm-repositories
-  path: ./infra/external-secrets
+  path: ./infra/external-secrets/operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets
+  namespace: flux-system
+spec:
+  interval: 10m
+  dependsOn:
+    - name: external-secrets-operator
+  path: ./infra/external-secrets/resources
   prune: true
   sourceRef:
     kind: GitRepository
@@ -37,7 +52,6 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: infra-helm-repositories
     - name: external-secrets
   path: ./infra/cert-manager
   prune: true
@@ -55,7 +69,6 @@ spec:
   interval: 10m
   dependsOn:
     - name: cert-manager
-    - name: external-secrets
   path: ./infra
   prune: true
   sourceRef:
