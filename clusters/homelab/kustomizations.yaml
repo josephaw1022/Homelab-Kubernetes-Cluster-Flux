@@ -372,3 +372,34 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: keda
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/keda
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kubescape
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/kubescape
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
