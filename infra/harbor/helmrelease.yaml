@@ -23,6 +23,8 @@ spec:
   values:
     expose:
       type: ingress
+      hosts:
+        core: harbor
       tls:
         enabled: true
       ingress:
