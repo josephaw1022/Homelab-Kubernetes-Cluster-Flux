@@ -23,8 +23,6 @@ spec:
   values:
     expose:
       type: ingress
-      hosts:
-        core: harbor
       tls:
         enabled: true
       ingress:
@@ -33,7 +31,7 @@ spec:
           tailscale.com/hostname: harbor
         kubeVersionOverride: "1.33.5"
         hosts:
-          core: core.tailc27027.ts.net
+          core: harbor.tailc27027.ts.net
     notary:
       enabled: false
     externalURL: "https://harbor.tailc27027.ts.net"
