@@ -29,5 +29,6 @@ spec:
         className: tailscale
       hosts:
         core: harbor
+      kubeVersionOverride: "1.33.5"
     notary:
       enabled: false
