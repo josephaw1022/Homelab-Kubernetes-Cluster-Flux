@@ -32,6 +32,8 @@ spec:
         annotations:
           tailscale.com/hostname: harbor
         kubeVersionOverride: "1.33.5"
+        hosts:
+          core: core.tailc27027.ts.net
     notary:
       enabled: false
     externalURL: "https://harbor.tailc27027.ts.net"
