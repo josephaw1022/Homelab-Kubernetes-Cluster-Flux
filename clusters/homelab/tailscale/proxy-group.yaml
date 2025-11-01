@@ -5,7 +5,7 @@ metadata:
   name: homelab-cluster
 spec:
   type: kube-apiserver
-  replicas: 3
+  replicas: 1
   tags: ["tag:k8s"]
   kubeAPIServer:
     mode: auth
