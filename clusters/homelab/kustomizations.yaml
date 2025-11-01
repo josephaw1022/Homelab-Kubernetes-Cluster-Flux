@@ -445,3 +445,46 @@ spec:
     name: flux-system
   dependsOn:
     - name: cert-manager
+
+
+---
+
+
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: olm-crds
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/olm/crds
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: cert-manager
+
+
+
+---
+
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: olm-resources
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/olm/resources
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: olm-crds
+
