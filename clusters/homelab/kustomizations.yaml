@@ -495,11 +495,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: datadog-operator
+  name: datadog-operator-ns
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./infra/datadog
+  path: ./infra/datadog/namespace
   prune: true
   wait: true
   sourceRef:
@@ -512,6 +512,29 @@ spec:
 
 ---
 
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: datadog-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/datadog/release
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: cert-manager
+  retryInterval: 30s
+  timeout: 5m
+
+
+
+
+
+---
 
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
