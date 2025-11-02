@@ -28,7 +28,7 @@ spec:
     datadogAgent:
       enabled: true
     datadogAgentInternal:
-      enabled: true
+      enabled: false
     datadogDashboard:
       enabled: true
     datadogGenericResource:
