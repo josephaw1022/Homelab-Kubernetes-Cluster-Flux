@@ -1,0 +1,19 @@
+kind: "DatadogAgent"
+apiVersion: "datadoghq.com/v2alpha1"
+metadata:
+  name: "datadog"
+spec:
+  global:
+    tags:
+      - "env:homelab"
+  features:
+    otelCollector:
+      enabled: true
+      ports:
+        - containerPort: 4317
+          hostPort: 4317
+          name: "otel-grpc"
+        - containerPort: 4318
+          hostPort: 4318
+          name: "otel-http"
+
