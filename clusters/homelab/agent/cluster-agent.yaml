@@ -18,6 +18,9 @@ spec:
         keyName: "app-key"
 
   features:
+    logCollection:
+      enabled: true
+      containerCollectAll: true
     otelCollector:
       enabled: true
       ports:
