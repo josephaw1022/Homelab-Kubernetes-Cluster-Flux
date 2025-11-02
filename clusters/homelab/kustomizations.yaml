@@ -68,7 +68,7 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: external-secrets-store
+    - name: infra-helm-repositories
   path: ./infra/cert-manager
   prune: true
   sourceRef:
