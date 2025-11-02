@@ -41,8 +41,7 @@ spec:
       enabled: true
     
     watchNamespaces:
-      - "datadog"
-      - "kube-system"
+      - "*"
 
     datadogCRDs:
       crds:
