@@ -4,6 +4,8 @@ metadata:
   name: "datadog"
 spec:
   global:
+    site: "us5.datadoghq.com"
+    clusterName: "homelab-cluster"
     tags:
       - "env:homelab"
   features:
