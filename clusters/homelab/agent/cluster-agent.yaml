@@ -31,3 +31,5 @@ spec:
           hostPort: 4318
           name: "otel-http"
 
+    orchestratorExplorer:
+      enabled: true
