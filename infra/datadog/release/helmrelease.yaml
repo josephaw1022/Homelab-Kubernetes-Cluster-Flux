@@ -30,13 +30,13 @@ spec:
     datadogAgentInternal:
       enabled: false
     datadogDashboard:
-      enabled: true
+      enabled: false
     datadogGenericResource:
-      enabled: true
+      enabled: false
     datadogMonitor:
-      enabled: true
+      enabled: false
     datadogSLO:
-      enabled: true
+      enabled: false
     remoteConfiguration:
       enabled: true
     
