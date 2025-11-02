@@ -9,6 +9,14 @@ spec:
     clusterName: "homelab-cluster"
     tags:
       - "env:homelab"
+    credentials:
+      apiSecret:
+        secretName: "datadog-credentials"
+        keyName: "api-key"
+      appSecret:
+        secretName: "datadog-credentials"
+        keyName: "app-key"
+
   features:
     otelCollector:
       enabled: true
