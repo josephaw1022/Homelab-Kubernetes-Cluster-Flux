@@ -526,7 +526,7 @@ spec:
     kind: GitRepository
     name: flux-system
   dependsOn:
-    - name: cert-manager
+    - name: datadog-operator-ns
   retryInterval: 30s
   timeout: 5m
 
