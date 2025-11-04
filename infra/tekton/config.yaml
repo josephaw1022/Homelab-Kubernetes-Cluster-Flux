@@ -2,10 +2,10 @@ apiVersion: operator.tekton.dev/v1alpha1
 kind: TektonConfig
 metadata:
   name: config
-  namespace: ${TEKTON_NS}
+  namespace: tekton
 spec:
-  profile: ${TEKTON_PROFILE}
-  targetNamespace: ${TEKTON_NS}
+  profile: all
+  targetNamespace: tekton
   pruner:
     resources:
       - pipelinerun
