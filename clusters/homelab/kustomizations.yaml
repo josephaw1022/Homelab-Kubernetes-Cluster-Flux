@@ -495,6 +495,43 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: tekton-subscriptions
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/olm/subscriptions/tekton
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: olm-resources
+
+
+---
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/tekton
+  prune: true
+  wait: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: tekton-subscriptions
+
+
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: datadog-operator-ns
   namespace: flux-system
 spec:
