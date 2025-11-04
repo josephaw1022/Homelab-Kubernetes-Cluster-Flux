@@ -16,3 +16,4 @@ spec:
     enable-tekton-oci-bundles: true
   dashboard:
     readonly: false
+
