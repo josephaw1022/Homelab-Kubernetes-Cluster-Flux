@@ -16,3 +16,7 @@ spec:
                 name: tekton-dashboard
                 port:
                   number: 9097
+  tls:
+    - hosts:
+        - tekton.tailc27027.ts.net
+      secretName: tekton-dashboard-tls
