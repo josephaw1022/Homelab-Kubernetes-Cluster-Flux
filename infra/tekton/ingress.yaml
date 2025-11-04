@@ -4,7 +4,7 @@ metadata:
   name: tekton-dashboard
   namespace: tekton
 spec:
-  ingressClassName: "tailscale"
+  ingressClassName: tailscale
   rules:
     - host: tekton.tailc27027.ts.net
       http:
