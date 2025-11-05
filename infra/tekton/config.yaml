@@ -7,12 +7,16 @@ spec:
   profile: 'all'
   targetNamespace: tekton
   pruner:
-    disable: true
-    resources:
-      - pipelinerun
-      - taskrun
-    keep: 100
+    disabled: false
     schedule: "0 8 * * *"
+    startingDeadlineSeconds: 100 # optional
+    resources:
+      - taskrun
+      - pipelinerun
+    keep: 3
+    # keep-since: 1440
+    # NOTE: you can use either "keep" or "keep-since", not both
+    prune-per-resource: true
   pipeline:
     enable-tekton-oci-bundles: true
   dashboard:
