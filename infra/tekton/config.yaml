@@ -1,7 +1,7 @@
 apiVersion: operator.tekton.dev/v1alpha1
 kind: TektonConfig
 metadata:
-  name: config
+  name: tekton-config
   namespace: tekton
 spec:
   profile: 'all'
