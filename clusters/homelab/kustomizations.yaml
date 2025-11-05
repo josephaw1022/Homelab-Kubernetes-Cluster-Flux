@@ -521,6 +521,7 @@ spec:
   path: ./infra/tekton
   prune: true
   wait: true
+  force: true
   sourceRef:
     kind: GitRepository
     name: flux-system
