@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: nginx-funnel-quota
+  namespace: nginx-funnel
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "500m"
+    requests.memory: "1Gi"
+    limits.cpu: "1"
+    limits.memory: "2Gi"
+    configmaps: "20"
+    services: "10"
+    secrets: "20"
