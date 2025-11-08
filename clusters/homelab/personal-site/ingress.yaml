@@ -4,6 +4,7 @@ metadata:
   name: nginx
   annotations:
     tailscale.com/funnel: "true"
+    tailscale.com/hostname: "jwhiteaker-personal-site"
 spec:
   ingressClassName: tailscale
   rules:
