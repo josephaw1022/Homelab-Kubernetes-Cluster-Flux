@@ -591,3 +591,22 @@ spec:
     - name: datadog-operator
 
 
+
+---
+
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: personal-site
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./clusters/homelab/personal-site
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: tailscale-resources
