@@ -16,3 +16,6 @@ spec:
         namespace: flux-system
   values:
     hostname: rancher.kubesoar.com
+    ingress:
+      extraAnnotations:
+        cert-manager.io/cluster-issuer: homelab-issuer
