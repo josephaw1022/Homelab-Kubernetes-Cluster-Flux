@@ -20,3 +20,4 @@ spec:
       includeDefaultExtraAnnotations: false
       extraAnnotations:
         cert-manager.io/cluster-issuer: homelab-issuer
+        cert-manager.io/issuer-type: ClusterIssuer
