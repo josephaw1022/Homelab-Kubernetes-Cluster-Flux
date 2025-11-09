@@ -610,3 +610,24 @@ spec:
     name: flux-system
   dependsOn:
     - name: tailscale-resources
+
+
+
+---
+
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: rancher
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./infra/rancher
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  dependsOn:
+    - name: cert-manager
